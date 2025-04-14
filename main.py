@@ -21,9 +21,10 @@ async def read(event):
     if event.is_reply:
         new = await event.get_reply_message()
         message = str()
-        results = spell_check(new.raw_text)
-        for r in results:
-            message += f"{r}\n"
+        for word in new.raw_text.split():
+            print(spell_check(word))
+            print("------------------")
+            message += f"{spell_check(word)[0][0]} "
 
         await event.reply(message)
 
