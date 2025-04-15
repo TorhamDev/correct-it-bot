@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 
 
 from telethon import TelegramClient, events
-from utils.wagner_fischer import spell_check
+from utils.wagner import spell_check
+from utils.words import add_sentence_words, words
 
 
 load_dotenv()
@@ -17,16 +18,21 @@ client = TelegramClient(os.getenv("CLIENT_NAME"), api_id, api_hash)
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"(?i).*!check"))
 async def read(event):
-    print(event.is_reply)
     if event.is_reply:
         new = await event.get_reply_message()
         message = str()
         for word in new.raw_text.split():
-            print(spell_check(word))
-            print("------------------")
-            message += f"{spell_check(word)[0][0]} "
+            message += f"{spell_check(word, words)[0][0]} "
 
         await event.reply(message)
+
+
+@client.on(events.NewMessage(outgoing=True, pattern=r"(?i).*!add"))
+async def add_new_words(event):
+    if event.is_reply:
+        new = await event.get_reply_message()
+        add_sentence_words(new.raw_text)
+        await event.reply("Added")
 
 
 client.start()

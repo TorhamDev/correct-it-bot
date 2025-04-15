@@ -1,9 +1,3 @@
-def load_dictionary(file_path):
-    with open(file_path, 'r') as file:
-        return [line.strip() for line in file]
-
-dictionary = load_dictionary("utils/words.txt")
-
 def wagner_fischer(s1, s2):
     len_s1, len_s2 = len(s1), len(s2)
     if len_s1 > len_s2:
@@ -21,7 +15,7 @@ def wagner_fischer(s1, s2):
 
     return current_row[len_s1]
 
-def spell_check(word):
+def spell_check(word, dictionary):
     suggestions = []
 
     for correct_word in dictionary:
