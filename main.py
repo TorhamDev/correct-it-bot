@@ -32,7 +32,7 @@ async def add_new_words(event):
     if event.is_reply:
         new = await event.get_reply_message()
         add_sentence_words(new.raw_text)
-        await event.reply("Added")
+        await event.delete()
 
 
 client.start()
