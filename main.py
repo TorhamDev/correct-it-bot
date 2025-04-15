@@ -16,7 +16,7 @@ api_hash = os.getenv("API_HASH")
 client = TelegramClient(os.getenv("CLIENT_NAME"), api_id, api_hash)
 
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"(?i).*!check"))
+@client.on(events.NewMessage(outgoing=True, pattern=r"(?i).*!fix"))
 async def read(event):
     if event.is_reply:
         new = await event.get_reply_message()
